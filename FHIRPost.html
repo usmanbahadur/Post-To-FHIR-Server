@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        var jsonObj
+        $(document).on('change', '.file-upload-button', function (event) {
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                jsonObj = JSON.parse(event.target.result);
+
+                $.ajax({
+
+                    type: "POST",
+                    url: " https://gosh-fhir-synth.azurehealthcareapis.com/Patient",
+                    data: JSON.stringify(jsonObj),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkhsQzBSMTJza3hOWjFXUXdtak9GXzZ0X3RERSIsImtpZCI6IkhsQzBSMTJza3hOWjFXUXdtak9GXzZ0X3RERSJ9.eyJhdWQiOiJodHRwczovL2dvc2gtZmhpci1zeW50aC5henVyZWhlYWx0aGNhcmVhcGlzLmNvbSIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0L2NhMjU0NDQ5LTA2ZWMtNGUxZC1hM2M5LWY4Yjg0ZTJhZmUzZi8iLCJpYXQiOjE1ODE2MDExMjgsIm5iZiI6MTU4MTYwMTEyOCwiZXhwIjoxNTgxNjA1MDI4LCJhY3IiOiIxIiwiYWlvIjoiQVVRQXUvOE9BQUFBYkt6QmJGZnlXejg0V1VkeFJpSmtVZkZiV2htWTd4RXNSdjdNZG1KcldrdFo1bHJocWZvaENxTWZWMDZpK250c1p6SWdYMDI5M2FaZ2YrUzRlcm43YVE9PSIsImFtciI6WyJ3aWEiXSwiYXBwaWQiOiJlMTE5MWRkMS0zODgwLTRjNjktOWY2NC1jMDczMDZjMDliZTMiLCJhcHBpZGFjciI6IjEiLCJlbWFpbCI6IlVzbWFuLkJhaGFkdXJAZ29zaC5uaHMudWsiLCJmYW1pbHlfbmFtZSI6IkJhaGFkdXIiLCJnaXZlbl9uYW1lIjoiVXNtYW4iLCJpZHAiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9iZGRlZjAwYS1lNjlkLTQ5ZjgtOTc4ZC01N2ExYTAzYTg2N2IvIiwiaXBhZGRyIjoiMTA5LjIzMi41Ni45MyIsIm5hbWUiOiJVc21hbiBCYWhhZHVyIiwib2lkIjoiYjY4MTFhYTQtOGEwNS00MDA1LTkwMTMtYmEzNzZlNjRlYjE3Iiwic2NwIjoicGF0aWVudCQqLnJlYWQgdXNlcl9pbXBlcnNvbmF0aW9uIiwic3ViIjoicm1FblEyNUVTNkJvRHpXMGVxcmxVS04xbmJrdmNReUpyZVNJa0owSXN2NCIsInRpZCI6ImNhMjU0NDQ5LTA2ZWMtNGUxZC1hM2M5LWY4Yjg0ZTJhZmUzZiIsInVuaXF1ZV9uYW1lIjoiVXNtYW4uQmFoYWR1ckBnb3NoLm5ocy51ayIsInV0aSI6IjFjMVlZeGxFWmt5SElWcnlLY3YxQUEiLCJ2ZXIiOiIxLjAifQ.sLrtFL1SYovIXa7oqF7ncp8TyVMymOIktJd7twW_0LHF5TCyZQNkegvT2ceEpGCMlbiu26Rriy3v0AOmqLfIVbgJXU9yDPaz6Sk9Ht_iwvoRU_9n4c0xJV5UtHWwBw6ZWmyov_yhVl4NZ2NT6ifqwD0MQTDZyP26oNfHXB3RzGCiXeuCKCOeQGlGhhQ_0O5P_jOocZj9EtVrpOKwDVq75ajItNhvgGYnghm708SiqYhU-rsntrqJoIG5g0WMMYDwZN9z-0CWB5cngup4EWU-IOp9qo3T7LHdoVHXpOFmTiwftApo2s3CJoYrSaooTF0PGuAKcs7marV_vSnu5zx1jA');
+                    },
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+
+            }
+            reader.readAsText(event.target.files[0]);
+
+        });
+
+
+
+    </script>
+</head>
+
+<body>
+    <center>
+        <h3>POST Patient bundle to FHIR Server (JSON Format)</h3>
+        <input class='file-upload-button' type="file" />
+    </center>
+</body>
+
+</html>
