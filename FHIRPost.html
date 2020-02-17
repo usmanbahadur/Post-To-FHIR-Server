@@ -15,23 +15,28 @@
                 $.ajax({
 
                     type: "POST",
-                    url: " https://your-fhir-server.com/Patient",
+                    // if you want to post a patient demographics this is the url   https://gosh-fhir-synth.azurehealthcareapis.com/Patient  
+                    //you can only use R4 version of FHIR Patient demographics you can get TEST patient using POSTMAN simple  get request  https://r4.smarthealthit.org/Patient
+                    //url: " https://baseurl.com/Patient",
+                    url: " https://baseurl.com/bundle",
                     data: JSON.stringify(jsonObj),
                     beforeSend: function (xhr) {
-                        xhr.setRequestHeader('Authorization', 'Bearer GET-TOKEN-USING-POSTMAN)
+                        xhr.setRequestHeader('Authorization', 'Bearer UGX6ljOCs0SFJfhBe1ZeZaPICu4ROxkMFH1LRDZluAV7fEpQRDqkJv7MZTT0ru0mxW0RyINtsIRueXVVAU4WL3MAQXg');
+                    },
                     dataType: "json",
                     contentType: "application/json",
                     success: function (data) {
                         console.log(data);
+                        document.getElementById('id').innerHTML = data.id;
+                        document.getElementById('birthdate').innerHTML = data.entry[0].resource.birthDate;
+                        document.getElementById('resourceType').innerHTML = data.resourceType;
+                        document.getElementById('family').innerHTML = data.entry[0].resource.name[0].family;
+                        document.getElementById('given').innerHTML = data.entry[0].resource.name[0].given;
                     }
                 });
-
             }
             reader.readAsText(event.target.files[0]);
-
         });
-
-
 
     </script>
 </head>
@@ -40,6 +45,12 @@
     <center>
         <h3>POST Patient bundle to FHIR Server (JSON Format)</h3>
         <input class='file-upload-button' type="file" />
+       <h5>Resource Type:</h5> <p id="resourceType"></p>
+        <h5>Bundle ID:</h5><p id="id"></p>
+        <h5>Birth Date:</h5><p id="birthdate"></p>
+        <h5>Surname:</h5><p id="family"></p>
+       <h5>First Name:</h5> <p id="given"></p>
+
     </center>
 </body>
 
